@@ -12,7 +12,7 @@ class ItemListTableViewController: UITableViewController {
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        ItemController.sharedInstance.saveToPersistenceStore()
+        ItemController.sharedInstance.loadFromPersistenceStore()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,9 +27,8 @@ class ItemListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? ItemTableViewCell else {return UITableViewCell()}
         let item = ItemController.sharedInstance.items[indexPath.row]
-        cell.delegate = self
+        cell.itemCompletionDelegate = self
         cell.item = item
-        
         return cell
     }
     

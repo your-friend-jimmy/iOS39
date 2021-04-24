@@ -16,7 +16,7 @@ class ItemTableViewCell: UITableViewCell {
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var itemComplete: UIButton!
     
-    weak var delegate: ItemCompletionDelegate?
+    weak var itemCompletionDelegate:ItemCompletionDelegate?
     
     var item : Item? {
         didSet {
@@ -25,18 +25,23 @@ class ItemTableViewCell: UITableViewCell {
     }
     
     @IBAction func completionButtonTapped(_ sender: UIButton) {
-        if let delegate = delegate {
+        if let delegate = itemCompletionDelegate {
             delegate.itemCellButtonTapped(self)
         }
     }
     
     func updateViews()  {
         if let newItem = item  {
-            let incomplete = UIImage(systemName: "rectangle")
-            let complete = UIImage(systemName:"checkmark.rectangle" )
+            setUpButtonImage(for: newItem)
             itemLabel.text = newItem.name
-            itemComplete.setImage(newItem.isComplete ? complete: incomplete, for: .normal)
             ItemController.sharedInstance.saveToPersistenceStore()
         }
+    }
+    
+    func setUpButtonImage(for item: Item) {
+        let config = UIImage.SymbolConfiguration(scale: .large)
+        let incomplete = UIImage(systemName: "rectangle", withConfiguration: config)
+        let complete = UIImage(systemName: "checkmark.rectangle", withConfiguration: config)
+        itemComplete.setImage(item.isComplete ? complete:incomplete, for:.normal)
     }
 }
