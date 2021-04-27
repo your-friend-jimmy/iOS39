@@ -19,6 +19,24 @@ class ItemListTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    @IBAction func createNewItemButtonTapped(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Add new item", message: "Please enter an item for your list.", preferredStyle: .alert)
+        
+        alertController.addTextField(configurationHandler: nil)
+        let okAction = UIAlertAction(title: "OK", style:.default) { _ in
+            if let nameTextField = alertController.textFields?.first, let name = nameTextField.text{
+                if name != ""{
+                ItemController.sharedInstance.createItemWith(name: name)
+                ItemController.sharedInstance.saveToPersistenceStore()
+                self.tableView.reloadData()
+                }
+            }
+        }
+        
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ItemController.sharedInstance.items.count
@@ -38,9 +56,7 @@ class ItemListTableViewController: UITableViewController {
             ItemController.sharedInstance.delete(item: itemToDelete)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-        
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailVC" {
@@ -52,11 +68,11 @@ class ItemListTableViewController: UITableViewController {
         }
     }
 }
-
-extension ItemListTableViewController : ItemCompletionDelegate {
-    func itemCellButtonTapped(_ sender: ItemTableViewCell) {
-        guard let item = sender.item else { return }
-        ItemController.sharedInstance.toggleIsComplete(item: item)
-        sender.updateViews()
+    
+    extension ItemListTableViewController : ItemCompletionDelegate {
+        func itemCellButtonTapped(_ sender: ItemTableViewCell) {
+            guard let item = sender.item else { return }
+            ItemController.sharedInstance.toggleIsComplete(item: item)
+            sender.updateViews()
+        }
     }
-}

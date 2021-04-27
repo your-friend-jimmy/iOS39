@@ -25,32 +25,34 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6Id-mb-YLQ">
-                                            <rect key="frame" x="8" y="24.5" width="91" height="22"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYT-n6-adA">
-                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="22"/>
-                                                    <fontDescription key="fontDescription" name=".SFNS-Regular" family=".SF NS" pointSize="2"/>
-                                                    <state key="normal" title="Button">
-                                                        <imageReference key="image" image="checkmark.rectangle" catalog="system" symbolScale="large"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="completionButtonTapped:" destination="cqm-4j-Zhj" eventType="touchUpInside" id="3MW-yU-nyN"/>
-                                                    </connections>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fw0-7U-0NZ">
-                                                    <rect key="frame" x="49.5" y="0.0" width="41.5" height="22"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
+                                        <button opaque="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYT-n6-adA">
+                                            <rect key="frame" x="20" y="30" width="29" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="29" id="7at-ci-gsX"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name=".SFNS-Regular" family=".SF NS" pointSize="2"/>
+                                            <state key="normal" title="Button">
+                                                <imageReference key="image" image="checkmark.rectangle" catalog="system" symbolScale="large"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="completionButtonTapped:" destination="cqm-4j-Zhj" eventType="touchUpInside" id="3MW-yU-nyN"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fw0-7U-0NZ">
+                                            <rect key="frame" x="57" y="31" width="41.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="6Id-mb-YLQ" firstAttribute="leading" secondItem="bSb-rI-ec7" secondAttribute="leading" constant="8" id="S6P-gn-4Ng"/>
-                                        <constraint firstItem="6Id-mb-YLQ" firstAttribute="centerY" secondItem="bSb-rI-ec7" secondAttribute="centerY" id="eBj-ST-eG7"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6Id-mb-YLQ" secondAttribute="trailing" constant="8" id="ww9-Vy-Apy"/>
+                                        <constraint firstItem="Fw0-7U-0NZ" firstAttribute="leading" secondItem="PYT-n6-adA" secondAttribute="trailing" constant="8" id="10G-Ky-1be"/>
+                                        <constraint firstAttribute="bottom" secondItem="Fw0-7U-0NZ" secondAttribute="bottom" constant="19.5" id="Fs0-0p-KRe"/>
+                                        <constraint firstItem="PYT-n6-adA" firstAttribute="leading" secondItem="bSb-rI-ec7" secondAttribute="leading" constant="20" symbolic="YES" id="WR4-Ij-l97"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Fw0-7U-0NZ" secondAttribute="trailing" constant="8" id="XVn-cF-QqD"/>
+                                        <constraint firstItem="PYT-n6-adA" firstAttribute="top" secondItem="bSb-rI-ec7" secondAttribute="topMargin" constant="19" id="b3V-Ok-n6q"/>
+                                        <constraint firstItem="Fw0-7U-0NZ" firstAttribute="top" secondItem="bSb-rI-ec7" secondAttribute="top" constant="31" id="eup-6x-VRg"/>
+                                        <constraint firstItem="PYT-n6-adA" firstAttribute="centerY" secondItem="Fw0-7U-0NZ" secondAttribute="centerY" id="lPN-Tx-CPg"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -68,8 +70,7 @@
                     <navigationItem key="navigationItem" id="IFd-Vn-3mD">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="BZ8-tH-1td">
                             <connections>
-                                <action selector="createItemButtonTapped:" destination="8Ar-4x-aEf" id="rHG-Vm-tvU"/>
-                                <segue destination="DBu-wP-tZN" kind="show" identifier="" id="eZz-A2-cIr"/>
+                                <action selector="createNewItemButtonTapped:" destination="8Ar-4x-aEf" id="0gv-xs-DhE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -144,9 +145,6 @@
             <point key="canvasLocation" x="428.98550724637687" y="91.741071428571431"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="eZz-A2-cIr"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.rectangle" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
