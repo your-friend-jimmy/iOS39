@@ -2,25 +2,26 @@
 //  Character.swift
 //  GOTgame
 //
-//  Created by James Phillips on 4/25/21.
+//  Created by James Phillips on 4/28/21.
 //
 
 import UIKit
-class Character {
-    let name: String
+enum Faction{
+    case Jedi,Sith
+}
+struct Character  {
+    let name : String
     let photo : UIImage?
-    let faction : String
-    var uuid : String
-    
-    init(name: String, photo: UIImage, faction: String, uuid: String = UUID().uuidString) {
-        self.name = name
-        self.photo = photo
-        self.faction = faction
-        self.uuid = uuid
+    let faction : Faction
+    let identifier = UUID()
+   
+ 
+    func hash(into hasher: inout Hasher)  {
+        hasher.combine(identifier)
     }
 }
-extension Character : Equatable {
+extension Character  : Hashable {
     static func == (lhs: Character, rhs: Character) -> Bool {
-        return lhs.uuid == rhs.uuid
+        return lhs.identifier == rhs.identifier
     }
 }

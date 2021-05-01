@@ -1,21 +1,23 @@
 //
-//  File.swift
+//  Question.swift
 //  GOTgame
 //
-//  Created by James Phillips on 4/25/21.
+//  Created by James Phillips on 4/28/21.
 //
 
 import Foundation
-class Question {
-    
-    let name : String?
+struct Question {
+    let title : String
     let question : String
-    let answer : Int
+    let answer : AnswerId
+    let identifier = UUID()
     
-    init(name: String?, question: String, answer: Int) {
-        self.name = name
-        self.question = question
-        self.answer = answer
+    func hash(into hasher: inout Hasher)  {
+        hasher.combine(identifier)
     }
-    
+}
+extension Question : Hashable {
+    static func == (lhs: Question, rhs: Question)-> Bool {
+        return lhs.identifier == rhs.identifier
+    }
 }
