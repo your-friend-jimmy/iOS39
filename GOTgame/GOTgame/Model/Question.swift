@@ -9,7 +9,7 @@ import Foundation
 struct Question {
     let title : String
     let question : String
-    let answer : AnswerId
+    let answer : String
     let identifier = UUID()
     
     func hash(into hasher: inout Hasher)  {

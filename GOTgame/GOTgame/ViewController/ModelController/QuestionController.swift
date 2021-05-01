@@ -11,19 +11,6 @@ import Foundation
 class QuestionController {
    static let sharedInstance = QuestionController()
     
-    let questions = [Question(title: "You killed My father prepare to die!", question: "Who killed Jango Fett?", answer:.MaceWindu)]
+    let questions = [Question(title: "You killed My father prepare to die!", question: "Who killed Jango Fett?", answer: "Mace Windu")]
 }
-enum  AnswerId {
-    case  AnakinSkywalker,
-          ObiWanKenobi,
-          AhsokaTano,
-          Leia,
-          MaceWindu,
-          Rey,
-          Yoda,
-          DarthMaul,
-          MoffGideon,
-          DarthVader,
-          KyloRen,
-          DarthSidious
-}
+

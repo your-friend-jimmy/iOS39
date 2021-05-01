@@ -18,15 +18,18 @@ class CharacterCollectionViewController: UIViewController {
     let sith = CharacterController.sharedInstance.sith
     var section : [[Character]] {[jedi,sith]}
     var characters : [Character] = []
-    
-    var dataSource : UICollectionViewDiffableDataSource<Section,Character>!
-    enum Section {
-        case main
+    var question : Question? {
+        get {
+            getNextQuestion()
+        }
     }
+    var dataSource : UICollectionViewDiffableDataSource<Section,Character>!
     
+    enum Section {case main}
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.delegate = self
         setUpData()
         configureDateSource()
         getNextQuestion()
@@ -34,36 +37,44 @@ class CharacterCollectionViewController: UIViewController {
         view.backgroundColor = .black
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
+    //    override func viewWillAppear(_ animated: Bool) {
+    //
+    //    }
     
     func presentAlert(character: Character) {
+        guard let question = question else {return}
+        let success = character.name == question.answer
+        let correctAlert  = UIAlertController(title: "That's correct", message: "Good Job.", preferredStyle: .alert)
+        let inCorrectAlert  = UIAlertController(title: "Sorry, not the droid we are looking for.", message: "Strong in the force you are not!", preferredStyle: .alert)
         
-        let characterAlert  = UIAlertController(title: "Put the Title Here", message: "Good Job.", preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:)
         let playAction = UIAlertAction(title: "Play", style: .default)
         
-        characterAlert.addAction(cancelAction)
-        characterAlert.addAction(playAction)
+        correctAlert.addAction(cancelAction)
+        correctAlert.addAction(playAction)
+        inCorrectAlert.addAction(cancelAction)
+        inCorrectAlert.addAction(playAction)
         
-        present(characterAlert, animated: true)
-        
+        if success {
+            present(correctAlert, animated: true)
+        }else {
+            present(inCorrectAlert, animated: true)
+        }
     }
     
-    func getNextQuestion(){
-        guard let question = QuestionController.sharedInstance.questions.randomElement() else {return}
+    func getNextQuestion()-> Question? {
+        guard let question =
+                QuestionController.sharedInstance.questions.randomElement() else {return nil }
         questionTitleLabel.text = question.title
         questionView.text = question.question
         print("\(question.answer)")
+        return question
     }
     
     func setUpData()  {
         characters += jedi.filter{$0.faction == .Jedi}
         characters += sith.filter{$0.faction == .Sith}
     }
-    
     
     func configureLayout() -> UICollectionViewCompositionalLayout {
         
@@ -102,11 +113,30 @@ class CharacterCollectionViewController: UIViewController {
         dataSource.apply(initialSnapshot, animatingDifferences: false)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let character = dataSource.itemIdentifier(for: indexPath)
-        
-        if let character = character {presentAlert(character: character)}
+}
+
+extension CharacterCollectionViewController: UICollectionViewDataSource , UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        characters.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "characterCell", for: indexPath) as? CharacterCollectionViewCell else {return UICollectionViewCell()}
+        
+        if let character = dataSource.itemIdentifier(for: indexPath){
+            cell.displayImage(for: character)
+        }
+        
+        return cell
+    }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? CharacterCollectionViewCell {
+            let character = characters[indexPath.row]
+            presentAlert(character: character)
+            cell.isSelected = true
+        }
+    }
 }
+
