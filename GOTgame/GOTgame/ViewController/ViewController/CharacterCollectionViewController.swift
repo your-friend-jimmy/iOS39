@@ -9,75 +9,93 @@ import UIKit
 
 class CharacterCollectionViewController: UIViewController {
     
+    //MARK: - Outlets
     @IBOutlet weak var questionTitleLabel: UILabel!
     @IBOutlet weak var questionView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    
+    //MARK: - Properties
+    var characters : [Character] = []
     let jedi = CharacterController.sharedInstance.jedi
     let sith = CharacterController.sharedInstance.sith
+    let questions = QuestionController.sharedInstance.questions
+    var targetedCharacter : Character?
+    var question : Question?
     var section : [[Character]] {[jedi,sith]}
-    var characters : [Character] = []
-    var question : Question? {
-        get {
-            getNextQuestion()
-        }
-    }
     var dataSource : UICollectionViewDiffableDataSource<Section,Character>!
     
+    //MARK: - Enum
     enum Section {case main}
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
         setUpData()
-        configureDateSource()
-        getNextQuestion()
-        collectionView.collectionViewLayout = configureLayout()
-        view.backgroundColor = .black
+        updateViews()
+        configureCollectionViewDateSource()
     }
     
-    //    override func viewWillAppear(_ animated: Bool) {
-    //
-    //    }
-    
-    func presentAlert(character: Character) {
-        guard let question = question else {return}
-        let success = character.name == question.answer
+    //MARK: - Functions and Helpers
+    func presentAlert(for character: Character) {
+        guard let question =  question else { return }
+        let success = character.name.rawValue == question.answer
+        
         let correctAlert  = UIAlertController(title: "That's correct", message: "Good Job.", preferredStyle: .alert)
-        let inCorrectAlert  = UIAlertController(title: "Sorry, not the droid we are looking for.", message: "Strong in the force you are not!", preferredStyle: .alert)
+                                              
+        let inCorrectAlert  = UIAlertController(title: "Sorry,that not it.",
+                                                message: "Use the force.", preferredStyle: .alert)
+                                                
+        let cancelAction = UIAlertAction(title: "Done", style: .cancel, handler: nil)
+        let playAction = UIAlertAction(title: "Play", style: .default) { (_) in
+            self.getANewQuestion()
+            self.updateViews()
+        }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:)
-        let playAction = UIAlertAction(title: "Play", style: .default)
-        
-        correctAlert.addAction(cancelAction)
         correctAlert.addAction(playAction)
+        correctAlert.addAction(cancelAction)
         inCorrectAlert.addAction(cancelAction)
-        inCorrectAlert.addAction(playAction)
+        
         
         if success {
             present(correctAlert, animated: true)
         }else {
             present(inCorrectAlert, animated: true)
         }
+       
     }
     
-    func getNextQuestion()-> Question? {
-        guard let question =
-                QuestionController.sharedInstance.questions.randomElement() else {return nil }
-        questionTitleLabel.text = question.title
-        questionView.text = question.question
-        print("\(question.answer)")
-        return question
+    func filter(_ questions: [Question],for character: Character) -> [Question] {
+        return questions.filter{$0.answer == character.name.rawValue}
+    }
+    
+    func setupQuestion(for character: Character){
+        let index = filter(questions, for: character)
+        question = index[0]
+    }
+    
+    func getANewQuestion() {
+        targetedCharacter = characters.randomElement()
+        guard let character = targetedCharacter else {return}
+        setupQuestion(for: character)
+    }
+    
+    func updateViews() {
+        questionTitleLabel.text = question?.title
+        
+        questionView.text       = question?.question
     }
     
     func setUpData()  {
+        collectionView.delegate = self
         characters += jedi.filter{$0.faction == .Jedi}
         characters += sith.filter{$0.faction == .Sith}
+        getANewQuestion()
+        collectionView.collectionViewLayout = configureLayout()
+        view.backgroundColor = .black
     }
     
+    //MARK: - CollectionView Layout
     func configureLayout() -> UICollectionViewCompositionalLayout {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
@@ -94,7 +112,8 @@ class CharacterCollectionViewController: UIViewController {
         return UICollectionViewCompositionalLayout(section: section)
     }
     
-    func configureDateSource(){
+    //MARK: - DataSource
+    func configureCollectionViewDateSource(){
         dataSource = UICollectionViewDiffableDataSource<Section,Character>(collectionView: self.collectionView){
             (collectionView, indexPath, character) -> UICollectionViewCell? in
             
@@ -112,9 +131,8 @@ class CharacterCollectionViewController: UIViewController {
         
         dataSource.apply(initialSnapshot, animatingDifferences: false)
     }
-    
 }
-
+//MARK: - Extensions
 extension CharacterCollectionViewController: UICollectionViewDataSource , UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -134,7 +152,7 @@ extension CharacterCollectionViewController: UICollectionViewDataSource , UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? CharacterCollectionViewCell {
             let character = characters[indexPath.row]
-            presentAlert(character: character)
+            presentAlert(for: character)
             cell.isSelected = true
         }
     }

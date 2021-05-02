@@ -18,7 +18,6 @@
 		69B1FD5E2636453900161CED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69B1FD5C2636453900161CED /* LaunchScreen.storyboard */; };
 		69B1FD71263647DD00161CED /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B1FD70263647DD00161CED /* CharacterController.swift */; };
 		69B1FD81263694B500161CED /* CharacterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B1FD80263694B500161CED /* CharacterCollectionViewCell.swift */; };
-		69C59351263CEB8600AFE649 /* CharCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C59350263CEB8600AFE649 /* CharCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +34,6 @@
 		69B1FD5F2636453900161CED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69B1FD70263647DD00161CED /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		69B1FD80263694B500161CED /* CharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionViewCell.swift; sourceTree = "<group>"; };
-		69C59350263CEB8600AFE649 /* CharCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +142,6 @@
 			isa = PBXGroup;
 			children = (
 				695E5091263A844700DDE43E /* CharacterCollectionViewController.swift */,
-				69C59350263CEB8600AFE649 /* CharCollectionViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -220,7 +217,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				695E5092263A844700DDE43E /* CharacterCollectionViewController.swift in Sources */,
-				69C59351263CEB8600AFE649 /* CharCollectionViewController.swift in Sources */,
 				69B1FD81263694B500161CED /* CharacterCollectionViewCell.swift in Sources */,
 				69B1FD71263647DD00161CED /* CharacterController.swift in Sources */,
 				69B1FD522636453700161CED /* AppDelegate.swift in Sources */,

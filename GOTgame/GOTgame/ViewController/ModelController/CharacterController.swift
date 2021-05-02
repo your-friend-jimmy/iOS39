@@ -9,17 +9,17 @@ import UIKit
 class  CharacterController   {
     static let sharedInstance = CharacterController()
     
-    let jedi = [Character(name: "Anakin Skywalker", photo: UIImage(named: "anakin"),  faction: .Jedi),
-                Character(name: "Obi Wan Kenobi",   photo: UIImage(named: "obi"),     faction: .Jedi),
-                Character(name: "Ahsoka Tano",      photo: UIImage(named: "ahsoka"),  faction: .Jedi),
-                Character(name: "Prinecss Leia",    photo: UIImage(named: "leia"),    faction: .Jedi),
-                Character(name: "Luke Skywalker",   photo: UIImage(named: "luke"),    faction: .Jedi),
-                Character(name: "Mace Windu",       photo: UIImage(named:  "mace"),    faction: .Jedi),
-                Character(name: "Master Yoda",      photo: UIImage(named: "yoda"),    faction: .Jedi)]
+    let jedi = [Character(name: .AnakinSkywalker, faction: .Jedi, photo: UIImage(named: "anakin")),
+                Character(name: .ObiWanKenobi,    faction: .Jedi, photo: UIImage(named: "obi")),
+                Character(name: .AhsokaTano,      faction: .Jedi, photo: UIImage(named: "ahsoka")),
+                Character(name: .PrinecssLeia,    faction: .Jedi, photo: UIImage(named: "leia")),
+                Character(name: .LukeSkywalker,   faction: .Jedi, photo: UIImage(named: "luke")),
+                Character(name: .MaceWindu,       faction: .Jedi, photo: UIImage(named: "mace")),
+                Character(name: .MasterYoda,      faction: .Jedi, photo: UIImage(named: "yoda"))]
     
-    let sith = [Character(name: "Darth Maul",       photo: UIImage(named: "maul"),    faction: .Sith),
-                Character(name: "Moff Gideon",      photo: UIImage(named: "moff"),    faction: .Sith),
-                Character(name: "Darth Vader",      photo: UIImage(named: "vader"),   faction: .Sith),
-                Character(name: "Kylo Ren",         photo: UIImage(named: "ren"),     faction: .Sith),
-                Character(name: "Darth Sidious",    photo: UIImage(named: "sidious"), faction: .Sith)]
+    let sith = [Character(name: .DarthMaul,       faction: .Sith, photo: UIImage(named: "maul")),
+                Character(name: .MoffGideon,      faction: .Sith, photo: UIImage(named: "moff")),
+                Character(name: .DarthVader,      faction: .Sith, photo: UIImage(named: "vader")),
+                Character(name: .KyloRen,         faction: .Sith, photo: UIImage(named: "ren")),
+                Character(name: .DarthSidious,    faction: .Sith, photo: UIImage(named: "sidious"))]
 }
